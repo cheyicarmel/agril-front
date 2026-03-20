@@ -119,7 +119,7 @@ export default function Home() {
               De la terre à votre table, sans intermédiaires inutiles.
             </p>
 
-            <div style={{
+            {/* <div style={{
               display: 'flex',
               flexDirection: 'column',
               gap: '0.75rem',
@@ -168,7 +168,7 @@ export default function Home() {
               >
                 Je suis agriculteur
               </Link>
-            </div>
+            </div> */}
           </div>
         </div>
 
