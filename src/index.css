@@ -1,11 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,600&family=Geist:wght@300;400;500;600&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --color-green-primary: #2D6A4F;
-  --color-green-light: #52B788;
-  --color-green-pale: #D8F3DC;
-  --color-beige: #F5F0E8;
-  --color-beige-dark: #D4C5A9;
-  --color-brown: #8B5E3C;
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --color-primary: #1A6B45;
+  --color-primary-hover: #155838;
+  --color-primary-light: #E8F5EE;
+  --color-accent: #C8773A;
+  --color-accent-light: #FDF0E6;
+  --color-surface: #FFFFFF;
+  --color-bg: #F8F7F4;
+  --color-border: #EBEBEB;
+  --color-border-strong: #D4D4D4;
+  --color-text: #1A1A1A;
+  --color-text-muted: #717171;
+  --color-text-light: #B0B0B0;
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Geist', system-ui, sans-serif;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.1), 0 4px 12px rgba(0,0,0,0.05);
+  --shadow-hover: 0 8px 28px rgba(0,0,0,0.14), 0 3px 8px rgba(0,0,0,0.06);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-bg);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+}
+
+::selection {
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-strong);
+  border-radius: 10px;
+}
+
+a { color: inherit; text-decoration: none; }
+
+.nav-burger { display: flex; }
+.nav-desktop-links { display: none; }
+.nav-desktop-actions { display: none; }
+
+@media (min-width: 768px) {
+  .nav-burger { display: none !important; }
+  .nav-desktop-links { display: flex !important; }
+  .nav-desktop-actions { display: flex !important; }
+}
+
+@media (min-width: 640px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .products-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+  .how-grid {
+    grid-template-columns: 1fr 1fr !important;
+    align-items: center;
+  }
+  .cta-inner {
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+@media (min-width: 768px) {
+  .login-card {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .login-left {
+    display: flex !important;
+  }
+  .login-mobile-logo {
+    display: none !important;
+  }
+}
+
+@media (min-width: 900px) {
+  .auth-layout {
+    grid-template-columns: 1fr 1fr !important;
+    min-height: calc(100svh - 64px);
+  }
+  .auth-visual {
+    display: block !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .farms-panel {
+    left: 0 !important;
+    right: 0 !important;
+    top: auto !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: 65% !important;
+    border-radius: 20px 20px 0 0 !important;
+  }
+}
+
+
+@media (min-width: 768px) {
+  .farm-detail-grid {
+    grid-template-columns: 1fr 300px !important;
+    align-items: start;
+  }
+  .stocks-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
 }

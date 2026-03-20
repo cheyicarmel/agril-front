@@ -28,8 +28,8 @@ export const getFarms = async (filters: FarmFilters = {}): Promise<PaginatedResp
 }
 
 export const getFarm = async (id: number): Promise<Farm> => {
-  const response = await apiClient.get<Farm>(`/farms/${id}`)
-  return response.data
+  const response = await apiClient.get<{ data: Farm }>(`/farms/${id}`)
+  return response.data.data
 }
 
 export const getMyFarms = async (): Promise<Farm[]> => {
