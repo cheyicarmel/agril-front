@@ -126,3 +126,8 @@ a { color: inherit; text-decoration: none; }
     grid-template-columns: repeat(2, 1fr) !important;
   }
 }
+
+@media (min-width: 768px) {
+  .dashboard-sidebar { display: block !important; }
+  .dashboard-mobile-header { display: none !important; }
+}
