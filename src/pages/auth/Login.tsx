@@ -308,7 +308,7 @@ export default function Login() {
                 onMouseEnter={(e) => { if (!isPending) e.currentTarget.style.background = 'var(--color-primary-hover)' }}
                 onMouseLeave={(e) => { if (!isPending) e.currentTarget.style.background = 'var(--color-primary)' }}
               >
-                {isPending ? 'Connexion...' : 'LOG IN'}
+                {isPending ? 'Connexion...' : 'Se Connecter'}
               </button>
             </form>
 
