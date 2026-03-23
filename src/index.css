@@ -131,3 +131,15 @@ a { color: inherit; text-decoration: none; }
   .dashboard-sidebar { display: block !important; }
   .dashboard-mobile-header { display: none !important; }
 }
+
+@media (min-width: 640px) {
+  .dashboard-stats-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+@media (min-width: 610px) {
+  .dashboard-content-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
