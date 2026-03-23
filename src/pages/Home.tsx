@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useStocks } from '../hooks/useStockes'
+import { useAuthStore } from '../store/authStore'
 
 const stats = [
   { value: '1 200+', label: 'Agriculteurs' },
@@ -18,6 +19,8 @@ const productImages: Record<string, string> = {
   'niébé': '/images/corn.jpg',
   'manioc': '/images/field.jpg',
 }
+
+
 
 function getProductImage(name: string): string {
   const lower = name.toLowerCase()
@@ -37,6 +40,7 @@ export default function Home() {
   const [visible, setVisible] = useState(false)
   const { data: stocksData, isLoading } = useStocks({ page: 1 })
   const featuredStocks = stocksData?.data?.slice(0, 4) ?? []
+  const { isAuthenticated, user } = useAuthStore()
 
   useEffect(() => {
     setTimeout(() => setVisible(true), 60)
@@ -520,32 +524,61 @@ export default function Home() {
                 </p>
               </div>
 
-              <Link
-                to="/register"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '0.6rem',
-                  background: 'white',
-                  color: 'var(--color-text)',
-                  padding: '1rem 2rem',
-                  borderRadius: '12px',
-                  fontSize: '0.95rem',
-                  fontWeight: 700,
-                  fontFamily: 'var(--font-body)',
-                  boxShadow: 'var(--shadow-lg)',
-                  alignSelf: 'flex-start',
-                  transition: 'transform 0.2s',
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
-                onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-              >
-                Créer mon profil gratuitement
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </Link>
+              {isAuthenticated ? (
+                <Link
+                  to="/dashboard"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '0.6rem',
+                    background: 'white',
+                    color: 'var(--color-text)',
+                    padding: '1rem 2rem',
+                    borderRadius: '12px',
+                    fontSize: '0.95rem',
+                    fontWeight: 700,
+                    fontFamily: 'var(--font-body)',
+                    boxShadow: 'var(--shadow-lg)',
+                    alignSelf: 'flex-start',
+                    transition: 'transform 0.2s',
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
+                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                >
+                  Accéder à mon tableau de bord
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </Link>
+              ) : (
+                <Link
+                  to="/register"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '0.6rem',
+                    background: 'white',
+                    color: 'var(--color-text)',
+                    padding: '1rem 2rem',
+                    borderRadius: '12px',
+                    fontSize: '0.95rem',
+                    fontWeight: 700,
+                    fontFamily: 'var(--font-body)',
+                    boxShadow: 'var(--shadow-lg)',
+                    alignSelf: 'flex-start',
+                    transition: 'transform 0.2s',
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
+                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                >
+                  Créer mon profil gratuitement
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </Link>
+              )}
             </div>
           </div>
         </div>
