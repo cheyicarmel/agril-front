@@ -56,7 +56,7 @@ export default function BuyerDashboard() {
   ]
 
   return (
-    <div style={{ maxWidth: '900px' }}>
+    <div style={{ maxWidth: '100%' }}>
 
       <div style={{ marginBottom: '2rem' }}>
         <h1 style={{
@@ -79,7 +79,7 @@ export default function BuyerDashboard() {
         display: 'grid',
         gridTemplateColumns: 'repeat(2, 1fr)',
         gap: '1rem',
-        marginBottom: '2rem',
+        marginBottom: '1rem',
       }} className="dashboard-stats-grid">
         {stats.map((stat, i) => (
           <div key={i} style={{
@@ -119,42 +119,50 @@ export default function BuyerDashboard() {
             </div>
           </div>
         ))}
+      </div>
 
-        {/* CTA Explorer */}
-        <div style={{
-          position: 'relative',
-          background: 'var(--color-primary)',
-          borderRadius: '16px',
-          padding: '1.25rem',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-          boxShadow: '0 4px 20px rgba(26,107,69,0.25)',
-        }} className="cta-inner" >
-          <p style={{ fontSize: '0.82rem', fontWeight: 600, color: 'rgba(255,255,255,0.7)', marginBottom: '0.5rem' }}>
+      {/* CTA Explorer — pleine largeur */}
+      <div style={{
+        background: 'var(--color-primary)',
+        borderRadius: '16px',
+        padding: '1.5rem 2rem',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap: '1.5rem',
+        boxShadow: '0 4px 20px rgba(26,107,69,0.25)',
+        marginBottom: '2rem',
+        flexWrap: 'wrap',
+      }}>
+        <div>
+          <p style={{ fontSize: '0.72rem', fontWeight: 600, color: 'rgba(255,255,255,0.6)', marginBottom: '0.35rem', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
             Trouver des producteurs
           </p>
           <p style={{
             fontFamily: 'var(--font-display)',
-            fontSize: '1.1rem', fontWeight: 700,
-            color: 'white', lineHeight: 1.3, marginBottom: '1rem',
+            fontSize: 'clamp(1rem, 2vw, 1.25rem)', fontWeight: 700,
+            color: 'white', lineHeight: 1.3,
           }}>
-            Explorer la carte des exploitations
+            Explorer la carte des exploitations béninoises
           </p>
-          <Link to="/farms" style={{
-            display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
-            background: 'white', color: 'var(--color-primary)',
-            padding: '0.6rem 1.25rem', borderRadius: '100px',
-            fontSize: '0.82rem', fontWeight: 700,
-            fontFamily: 'var(--font-body)', alignSelf: 'flex-start',
-            transition: 'transform 0.15s',
-          }}>
-            Explorer
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M2 6h8M8 4l2 2-2 2" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </Link>
         </div>
+        <Link to="/farms" style={{
+          display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
+          background: 'white', color: 'var(--color-primary)',
+          padding: '0.75rem 1.5rem', borderRadius: '100px',
+          fontSize: '0.875rem', fontWeight: 700,
+          fontFamily: 'var(--font-body)', flexShrink: 0,
+          transition: 'transform 0.15s',
+          whiteSpace: 'nowrap',
+        }}
+          onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.03)'}
+          onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+        >
+          Explorer maintenant
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M2 7h10M10 5l2 2-2 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </Link>
       </div>
 
       <div style={{

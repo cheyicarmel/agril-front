@@ -136,7 +136,7 @@ export default function FarmerFarms() {
   }
 
   return (
-    <div style={{ maxWidth: '900px' }}>
+    <div style={{ maxWidth: '100%' }}>
 
       {/* En-tête */}
       <div style={{

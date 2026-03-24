@@ -32,7 +32,7 @@ export default function FarmerMessages() {
   }
 
   return (
-    <div style={{ maxWidth: '900px' }}>
+    <div style={{ maxWidth: '100%' }}>
       <div style={{ marginBottom: '1.5rem' }}>
         <h1 style={{
           fontFamily: 'var(--font-display)',

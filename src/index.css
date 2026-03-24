@@ -138,9 +138,17 @@ a { color: inherit; text-decoration: none; }
   }
 }
 
-@media (min-width: 610px) {
+@media (min-width: 1024px) {
+  /* .dashboard-stats-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+  } */
   .dashboard-content-grid {
     grid-template-columns: 1fr 1fr !important;
   }
 }
 
+@media (min-width: 1280px) {
+  .dashboard-content-grid {
+    grid-template-columns: 3fr 2fr !important;
+  }
+}
