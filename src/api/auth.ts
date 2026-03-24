@@ -31,6 +31,18 @@ export const register = async (data: RegisterData): Promise<AuthResponse> => {
   return response.data
 }
 
+export const updateProfile = async (data: {
+  name?: string
+  email?: string
+  phone?: string
+  current_password?: string
+  password?: string
+  password_confirmation?: string
+}): Promise<User> => {
+  const response = await apiClient.patch<{ user: User }>('/profile', data)
+  return response.data.user
+}
+
 export const logout = async (): Promise<void> => {
   await apiClient.post('/auth/logout')
 }
