@@ -1,6 +1,10 @@
 import { Link } from 'react-router-dom'
+import { useAuthStore } from '../../store/authStore'
+
 
 export default function Footer() {
+  const { isAuthenticated, user } = useAuthStore()
+
   return (
     <footer style={{
       borderTop: '1px solid var(--color-border)',
@@ -31,21 +35,30 @@ export default function Footer() {
             Connecter les producteurs béninois aux marchés locaux.
           </p>
         </div>
-        <div style={{ display: 'flex', gap: '2rem' }}>
-          {[
-            { to: '/farms', label: 'Exploitations' },
-            { to: '/register', label: 'S\'inscrire' },
-            { to: '/login', label: 'Connexion' },
-          ].map(({ to, label }) => (
-            <Link
-              key={to}
-              to={to}
-              style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)', transition: 'color 0.2s' }}
-            >
-              {label}
-            </Link>
-          ))}
-        </div>
+        {isAuthenticated ? (
+          <div>
+            
+          </div>
+        ) : (
+          <div style={{ display: 'flex', gap: '2rem' }}>
+            {[
+              { to: '/farms', label: 'Exploitations' },
+              { to: '/register', label: 'S\'inscrire' },
+              { to: '/login', label: 'Connexion' },
+            ].map(({ to, label }) => (
+              <Link
+                key={to}
+                to={to}
+                style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)', transition: 'color 0.2s' }}
+              >
+                {label}
+              </Link>
+            ))}
+          </div>
+        )}
+        
+
+
         <p style={{ fontSize: '0.78rem', color: 'var(--color-text-light)' }}>
           © 2026 AgriL. Bénin.
         </p>

@@ -167,7 +167,7 @@ export default function Login() {
                 marginBottom: '0.4rem',
                 lineHeight: 1.15,
               }}>
-                welcome
+                Bienvenue
               </h1>
               <p style={{ fontSize: '0.875rem', color: 'var(--color-text-muted)', fontWeight: 300 }}>
                 Connectez-vous à votre compte pour continuer.

@@ -190,7 +190,7 @@ export default function Register() {
                 marginBottom: '0.35rem',
                 lineHeight: 1.15,
               }}>
-                welcome
+                Bienvenue
               </h1>
               <p style={{ fontSize: '0.82rem', color: 'var(--color-text-muted)', fontWeight: 300 }}>
                 Créez votre compte pour commencer.
