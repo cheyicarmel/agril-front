@@ -28,19 +28,24 @@ export default function FarmerFarms() {
   const { data: farms, isLoading } = useMyFarms()
   const { mutate: createFarm, isPending: creating } = useCreateFarm()
   const { mutate: updateFarm, isPending: updating } = useUpdateFarm()
+  
 
   const [showForm, setShowForm] = useState(false)
   const [editingFarm, setEditingFarm] = useState<Farm | null>(null)
   const [form, setForm] = useState<FarmFormData>(emptyForm)
   const [formError, setFormError] = useState<string | null>(null)
   const [locating, setLocating] = useState(false)
+  const [imageFile, setImageFile] = useState<File | null>(null)
+  const [imagePreview, setImagePreview] = useState<string | null>(null)
 
   const openCreate = () => {
-    setEditingFarm(null)
-    setForm(emptyForm)
-    setFormError(null)
-    setShowForm(true)
-  }
+  setEditingFarm(null)
+  setForm(emptyForm)
+  setFormError(null)
+  setImageFile(null)
+  setImagePreview(null)
+  setShowForm(true)
+}
 
   const openEdit = (farm: Farm) => {
     setEditingFarm(farm)
@@ -100,12 +105,16 @@ export default function FarmerFarms() {
           onError: (err: any) => setFormError(err.response?.data?.message ?? 'Erreur lors de la modification.'),
         }
       )
-    } else {
-      createFarm(payload, {
-        onSuccess: () => setShowForm(false),
-        onError: (err: any) => setFormError(err.response?.data?.message ?? 'Erreur lors de la création.'),
-      })
-    }
+  } else {
+    createFarm({ ...payload, image: imageFile || undefined }, {
+      onSuccess: () => {
+        setShowForm(false)
+        setImageFile(null)
+        setImagePreview(null)
+      },
+      onError: (err: any) => setFormError(err.response?.data?.message ?? 'Erreur lors de la création.'),
+    })
+  }
   }
 
   const handleToggleActive = (farm: Farm) => {
@@ -542,6 +551,69 @@ export default function FarmerFarms() {
                 <p style={{ fontSize: '0.7rem', color: 'var(--color-text-muted)', marginTop: '0.35rem' }}>
                   Utilisez le bouton "Ma position" ou entrez les coordonnées manuellement.
                 </p>
+              </div>
+
+              <div>
+                <label style={labelStyle}>
+                  Photo de la ferme{' '}
+                  <span style={{ fontWeight: 300, textTransform: 'none' }}>(optionnelle)</span>
+                </label>
+
+                {imagePreview ? (
+                  <div style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden' }}>
+                    <img
+                      src={imagePreview}
+                      alt="Aperçu"
+                      style={{ width: '100%', height: '140px', objectFit: 'cover', display: 'block' }}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => { setImageFile(null); setImagePreview(null) }}
+                      style={{
+                        position: 'absolute', top: '0.5rem', right: '0.5rem',
+                        width: '28px', height: '28px', borderRadius: '50%',
+                        background: 'rgba(0,0,0,0.5)', border: 'none',
+                        cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      }}
+                    >
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                        <path d="M2 2l8 8M10 2L2 10" stroke="white" strokeWidth="1.4" strokeLinecap="round"/>
+                      </svg>
+                    </button>
+                  </div>
+                ) : (
+                  <label style={{
+                    display: 'flex', flexDirection: 'column', alignItems: 'center',
+                    justifyContent: 'center', gap: '0.5rem', padding: '1.5rem',
+                    borderRadius: '12px', border: '2px dashed #E8E8E8',
+                    background: '#F8F8F8', cursor: 'pointer', transition: 'border-color 0.2s',
+                  }}
+                    onMouseEnter={(e) => e.currentTarget.style.borderColor = 'var(--color-primary)'}
+                    onMouseLeave={(e) => e.currentTarget.style.borderColor = '#E8E8E8'}
+                  >
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                      <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="#BBBBBB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                    <span style={{ fontSize: '0.82rem', color: 'var(--color-text-muted)' }}>
+                      Cliquer pour ajouter une photo
+                    </span>
+                    <span style={{ fontSize: '0.72rem', color: 'var(--color-text-light)' }}>
+                      JPG, PNG, WEBP — max 5 Mo
+                    </span>
+                    <input
+                      type="file"
+                      accept="image/jpeg,image/png,image/jpg,image/webp"
+                      style={{ display: 'none' }}
+                      onChange={(e) => {
+                        const file = e.target.files?.[0]
+                        if (file) {
+                          setImageFile(file)
+                          setImagePreview(URL.createObjectURL(file))
+                        }
+                      }}
+                    />
+                  </label>
+                )}
               </div>
 
               <div style={{ display: 'flex', gap: '0.75rem', paddingTop: '0.5rem' }}>

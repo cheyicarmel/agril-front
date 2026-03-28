@@ -9,22 +9,19 @@ const stats = [
   { value: '45', label: 'Villes' },
 ]
 
-const productImages: Record<string, string> = {
+const defaultImages: Record<string, string> = {
   'tomate': '/images/tomato.jpg',
   'maïs': '/images/maize.jpg',
-  'maiz': '/images/maize2.jpg',
   'igname': '/images/farm.jpg',
   'arachide': '/images/corn.jpg',
   'ananas': '/images/maize2.jpg',
-  'niébé': '/images/corn.jpg',
   'manioc': '/images/field.jpg',
 }
 
-
-
-function getProductImage(name: string): string {
-  const lower = name.toLowerCase()
-  for (const [key, img] of Object.entries(productImages)) {
+function getStockImage(stock: any): string {
+  if (stock.photo_url) return stock.photo_url
+  const lower = (stock.product?.name ?? '').toLowerCase()
+  for (const [key, img] of Object.entries(defaultImages)) {
     if (lower.includes(key)) return img
   }
   return '/images/field.jpg'
@@ -272,7 +269,7 @@ export default function Home() {
 
             {featuredStocks.map((stock) => {
               const productName = stock.product?.name ?? ''
-              const image = getProductImage(productName)
+              const image = getStockImage(stock)
               return (
                 <Link
                   key={stock.id}

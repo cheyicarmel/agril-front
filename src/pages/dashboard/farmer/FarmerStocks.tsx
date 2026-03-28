@@ -44,6 +44,8 @@ export default function FarmerStocks() {
   const [formError, setFormError] = useState<string | null>(null)
   const [filterStatus, setFilterStatus] = useState<string>('all')
   const [confirmDelete, setConfirmDelete] = useState<number | null>(null)
+  const [imageFile, setImageFile] = useState<File | null>(null)
+  const [imagePreview, setImagePreview] = useState<string | null>(null)
 
   const filteredStocks = stocks?.filter(s =>
     filterStatus === 'all' ? true : s.status === filterStatus
@@ -61,10 +63,13 @@ export default function FarmerStocks() {
       price_per_unit: parseFloat(form.price_per_unit),
       available_from: form.available_from,
       notes: form.notes || undefined,
+      image: imageFile || undefined,
     }, {
       onSuccess: () => {
         setShowForm(false)
         setForm(emptyForm)
+        setImageFile(null)
+        setImagePreview(null)
       },
       onError: (err: any) => {
         const errors = err.response?.data?.errors
@@ -579,6 +584,69 @@ export default function FarmerStocks() {
                   onFocus={(e) => { e.target.style.borderColor = 'var(--color-primary)'; e.target.style.background = 'white' }}
                   onBlur={(e) => { e.target.style.borderColor = '#E8E8E8'; e.target.style.background = '#F8F8F8' }}
                 />
+              </div>
+
+              <div>
+                <label style={labelStyle}>
+                  Photo du produit{' '}
+                  <span style={{ fontWeight: 300, textTransform: 'none' }}>(optionnelle)</span>
+                </label>
+
+                {imagePreview ? (
+                  <div style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden' }}>
+                    <img
+                      src={imagePreview}
+                      alt="Aperçu"
+                      style={{ width: '100%', height: '140px', objectFit: 'cover', display: 'block' }}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => { setImageFile(null); setImagePreview(null) }}
+                      style={{
+                        position: 'absolute', top: '0.5rem', right: '0.5rem',
+                        width: '28px', height: '28px', borderRadius: '50%',
+                        background: 'rgba(0,0,0,0.5)', border: 'none',
+                        cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      }}
+                    >
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                        <path d="M2 2l8 8M10 2L2 10" stroke="white" strokeWidth="1.4" strokeLinecap="round"/>
+                      </svg>
+                    </button>
+                  </div>
+                ) : (
+                  <label style={{
+                    display: 'flex', flexDirection: 'column', alignItems: 'center',
+                    justifyContent: 'center', gap: '0.5rem', padding: '1.5rem',
+                    borderRadius: '12px', border: '2px dashed #E8E8E8',
+                    background: '#F8F8F8', cursor: 'pointer', transition: 'border-color 0.2s',
+                  }}
+                    onMouseEnter={(e) => e.currentTarget.style.borderColor = 'var(--color-primary)'}
+                    onMouseLeave={(e) => e.currentTarget.style.borderColor = '#E8E8E8'}
+                  >
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                      <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="#BBBBBB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                    <span style={{ fontSize: '0.82rem', color: 'var(--color-text-muted)' }}>
+                      Cliquer pour ajouter une photo
+                    </span>
+                    <span style={{ fontSize: '0.72rem', color: 'var(--color-text-light)' }}>
+                      JPG, PNG, WEBP — max 5 Mo
+                    </span>
+                    <input
+                      type="file"
+                      accept="image/jpeg,image/png,image/jpg,image/webp"
+                      style={{ display: 'none' }}
+                      onChange={(e) => {
+                        const file = e.target.files?.[0]
+                        if (file) {
+                          setImageFile(file)
+                          setImagePreview(URL.createObjectURL(file))
+                        }
+                      }}
+                    />
+                  </label>
+                )}
               </div>
 
               <div style={{ display: 'flex', gap: '0.75rem', paddingTop: '0.5rem' }}>

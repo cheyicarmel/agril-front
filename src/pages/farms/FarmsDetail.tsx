@@ -10,7 +10,7 @@ const STATUS_CONFIG = {
   exhausted: { label: 'Épuisé', bg: '#F5F5F5', color: '#737373' },
 }
 
-const productImages: Record<string, string> = {
+const defaultImages: Record<string, string> = {
   'tomate': '/images/tomato.jpg',
   'maïs': '/images/maize.jpg',
   'igname': '/images/farm.jpg',
@@ -19,9 +19,10 @@ const productImages: Record<string, string> = {
   'manioc': '/images/field.jpg',
 }
 
-function getProductImage(name: string): string {
-  const lower = name.toLowerCase()
-  for (const [key, img] of Object.entries(productImages)) {
+function getStockImage(stock: any): string {
+  if (stock.photo_url) return stock.photo_url
+  const lower = (stock.product?.name ?? '').toLowerCase()
+  for (const [key, img] of Object.entries(defaultImages)) {
     if (lower.includes(key)) return img
   }
   return '/images/field.jpg'
@@ -345,7 +346,7 @@ export default function FarmDetail() {
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.875rem' }} className="stocks-grid">
                 {availableStocks.map((stock) => {
                   const s = STATUS_CONFIG[stock.status]
-                  const image = getProductImage(stock.product?.name ?? '')
+                  const image = getStockImage(stock)
                   return (
                     <div
                       key={stock.id}

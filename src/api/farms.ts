@@ -37,8 +37,20 @@ export const getMyFarms = async (): Promise<Farm[]> => {
   return response.data.data
 }
 
-export const createFarm = async (data: FarmData): Promise<Farm> => {
-  const response = await apiClient.post<{ farm: Farm }>('/farms', data)
+export const createFarm = async (data: FarmData & { image?: File }): Promise<Farm> => {
+  const formData = new FormData()
+  formData.append('name', data.name)
+  formData.append('latitude', String(data.latitude))
+  formData.append('longitude', String(data.longitude))
+  formData.append('city', data.city)
+  formData.append('department', data.department)
+  if (data.description) formData.append('description', data.description)
+  if (data.address) formData.append('address', data.address)
+  if (data.image) formData.append('image', data.image)
+
+  const response = await apiClient.post<{ farm: Farm }>('/farms', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  })
   return response.data.farm
 }
 

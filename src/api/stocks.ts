@@ -35,8 +35,20 @@ export const getMyStocks = async (): Promise<Stock[]> => {
   return response.data.data
 }
 
-export const createStock = async (data: StockData): Promise<Stock> => {
-  const response = await apiClient.post<{ stock: Stock }>('/stocks', data)
+export const createStock = async (data: StockData & { image?: File }): Promise<Stock> => {
+  const formData = new FormData()
+  formData.append('farm_id', String(data.farm_id))
+  formData.append('product_id', String(data.product_id))
+  formData.append('quantity', String(data.quantity))
+  formData.append('unit', data.unit)
+  formData.append('price_per_unit', String(data.price_per_unit))
+  formData.append('available_from', data.available_from)
+  if (data.notes) formData.append('notes', data.notes)
+  if (data.image) formData.append('image', data.image)
+
+  const response = await apiClient.post<{ stock: Stock }>('/stocks', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  })
   return response.data.stock
 }
 
